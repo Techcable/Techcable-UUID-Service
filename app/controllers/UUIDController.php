@@ -37,7 +37,11 @@ class UUIDController extends BaseController {
             $player->name = $name;
             $player->uuid = $uuid;
             
-            $player->expires = time() + (60 * 60 * 12); //12 hours
+            if ($name == '"error"') {
+                $player->expires = time() + (60 * 30); //30 min
+            } else {
+                $player->expires = time() + (60 * 60 * 12); //12 hours
+            }
             $player->save();
         }
         
@@ -65,7 +69,11 @@ class UUIDController extends BaseController {
             $player->name = $name;
             $player->uuid = $uuid;
             
-            $player->expires = time() + (60 * 60 * 12); //12 hours
+            if ($name == 'error') {
+                $player->expires = time() + (60 * 30); //30 min
+            } else {
+                $player->expires = time() + (60 * 60 * 12); //12 hours
+            }
             $player->save();
         }
         
@@ -83,6 +91,11 @@ class UUIDController extends BaseController {
         curl_close($ch);
         
         $json = json_decode($rawResponse, true);
+        
+        if (array_key_exists('error', $json)) {
+            return '"error"';
+        }
+        
         return $json["name"];
     }
     
@@ -97,6 +110,11 @@ class UUIDController extends BaseController {
         curl_close($ch);
         
         $json = json_decode($rawResponse, true);
+        
+        if (array_key_exists("error", $json)) {
+            return 'error';
+        }
+        
         return $json["uuid"];
     }
 }
