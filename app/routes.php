@@ -11,7 +11,5 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+Route::get('api/uuid/{name}', 'UUIDController@uuid');
+Route::get('api/name/{uuid}', 'UUIDController@name');
